@@ -1,16 +1,25 @@
 <template>
-
-  <textarea id="note">
-  </textarea>
+  <textarea v-model="memoContent" @keyup="saveContent" id="note"/>
 </template>
 
 <script>
   export default {
     name: 'landing-page',
-    components: { },
+    data: () => {
+      return {
+        memoContent: ''
+      }
+    },
+    components: {
+
+    },
+    // 화살표함수를 쓰면 this를 가져가므로 주의
+    created () {
+      this.memoContent = localStorage.getItem('memoContent')
+    },
     methods: {
-      open (link) {
-        this.$electron.shell.openExternal(link)
+      saveContent () {
+        localStorage.setItem('memoContent', this.memoContent)
       }
     }
   }
@@ -20,15 +29,19 @@
   @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
 
   * {
-    /*box-sizing: border-box;*/
     margin: 0;
     padding: 0;
   }
 
+  html {
+    width: 100%;
+    height: 100%;
+  }
+
   body {
     font-family: 'Source Sans Pro', sans-serif;
-    height: 100vh;
-    width: 100vw;
+    height: 100%;
+    width: 100%;
     max-width: 100%;
     max-height: 100%;
   }
@@ -39,7 +52,9 @@
     border: none;
     outline: none;
     resize: none;
-    font-size: 30px;
+    font-size: 16px;
+    background-color: #FFFBD3;
+    padding: 16px;
   }
 
 </style>
